@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WesBos_Closure</title>
+</head>
+<body>
+    <script>
+        // A closure is the ability to access a parent level scope from a child scope
+        // , even after the parent function has been terminated.
+        // examples here
+        function outer(){
+            const outerVar = "outerVar";
+            // console.log(outerVar);
+            return function inner(){
+                const innerVar = "innerVar";
+                console.log(innerVar);
+
+                console.log(outerVar);
+            }
+        }
+
+        const InnerFn = outer();
+        InnerFn();
+
+
+        function createGreeting(greeting = "") {
+            const myGreet = greeting.toUpperCase();
+            return function (name) {
+                return `${myGreet} ${name}`;
+            };
+        }
+
+        const sayHello = createGreeting('hello');
+        const sayHey = createGreeting('hey');
+        console.log(sayHello('wes'));
+        console.log(sayHello('kait'));
+        console.log(sayHey('kait'));
+
+        // function createGame(gameName) {
+        //     let score = 0;
+        //     return function win() {
+        //         score++;
+        //         return `Your name ${gameName} score is ${score}`
+        //     }
+        // }
+        // const hockeyGame = createGame('Hockey');
+        // hockeyGame();
+        // console.log(hockeyGame());
+
+        // factory function
+        function createGame(gameName) {
+            let score = 0;
+            function win() {
+                score++;
+            }
+            function getScore(){
+                return score;
+            }
+            return {getScore,win};
+        }
+        const hockeyGame = createGame('Hockey');
+
+        hockeyGame.win();
+        hockeyGame.win();
+        console.log(hockeyGame.getScore());
+
+
+    </script>
+</body>
+</html>
